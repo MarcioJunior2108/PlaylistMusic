@@ -37,7 +37,7 @@
 }
 .sb__logo{
   width:32px;height:32px;border-radius:8px;
-  background:#8a2be2; display:flex; align-items:center; justify-content:center;
+  background:#ffffff; display:flex; align-items:center; justify-content:center;
 }
 .sb__name{font-weight:700; letter-spacing:.2px}
 
@@ -159,3 +159,6 @@ input[type="range"]::-moz-range-thumb{
   background:#20d15a; color:#111; font-weight:700;
 }
 .player .play:hover{ filter:brightness(0.95); }
+.lolo{
+  color: rgb(63, 63, 63);
+}

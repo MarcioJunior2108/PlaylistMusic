@@ -12,7 +12,7 @@ export default function Sidebar(){
   return (
     <div className="sb">
       <div className="sb__brand">
-        <div className="sb__logo">🎵</div>
+        <div className="sb__logo"><Music className='lolo'/></div>
         <div className="sb__name">NeuraMusic</div>
       </div>
 
