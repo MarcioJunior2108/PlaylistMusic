@@ -274,3 +274,48 @@ input[type="range"]::-moz-range-thumb{ width:12px; height:12px; border-radius:50
   .sb__desktop{ display:none; }
   .drawer{ display:block; } /* fica disponível, mas invisível sem .is-open */
 }
+
+
+/* ======= Player flutuante no mobile ======= */
+@media (max-width: 720px){
+  :root{
+    /* ajuste rápido: suba/abaixe aqui */
+    --player-gap: 18px;      /* distância do fundo da tela */
+    --player-h: 120px;       /* altura estimada do player no mobile */
+    --player-pad: 14px;      /* margem lateral */
+  }
+
+  /* a área .bottom deixa de ser sticky; quem fixa é o .player */
+  .bottom{
+    position: static;
+    border-top: none;        /* o player terá sombra/borda própria */
+    height: 0;               /* não consome espaço extra */
+  }
+
+  .player{
+    position: fixed;
+    left: var(--player-pad);
+    right: var(--player-pad);
+    bottom: calc(env(safe-area-inset-bottom, 0) + var(--player-gap));
+    z-index: 70;
+
+    /* visual de barra flutuante */
+    border-radius: 16px;
+    background:#0e0e14;
+    box-shadow: 0 10px 28px rgba(0,0,0,.42);
+    padding: 12px 14px calc(12px + env(safe-area-inset-bottom, 0));
+    grid-template-columns: 1fr; /* empilha controles no mobile */
+    gap: 10px;
+    min-height: auto; /* usamos --player-h para o padding do conteúdo */
+  }
+
+  /* garante que a lista não fique escondida atrás do player */
+  .center{
+    padding-bottom: calc(var(--player-h) + var(--player-gap) + env(safe-area-inset-bottom, 0) + 24px);
+  }
+
+  /* pequenos ajustes nos controles quando flutuante */
+  .player__thumb{ width:48px; height:48px; }
+  .player__controls button{ width:44px; height:44px; }
+  .player__controls .play{ width:52px; height:52px; }
+}
