@@ -13,11 +13,11 @@ button { border:0; background:none; cursor:pointer; color:inherit; }
 a { color:inherit; text-decoration:none; }
 :focus-visible { outline:2px solid #20d15a; outline-offset:2px; }
 
-/* ===== Layout de 3 regiões: sidebar fixa, conteúdo scrollável, player fixo ===== */
+/* ===== Layout: sidebar fixa, conteúdo scrollável, player elástico ===== */
 .shell{
   display:grid;
   grid-template-columns: 260px 1fr;
-  grid-template-rows: 1fr 88px;
+  grid-template-rows: 1fr minmax(88px, auto); /* player elástico */
   grid-template-areas:
     "left center"
     "bottom bottom";
@@ -38,166 +38,143 @@ a { color:inherit; text-decoration:none; }
   overflow:auto;
   -webkit-overflow-scrolling: touch;
   background:linear-gradient(180deg,#2b2040 0%, #1a1526 40%, #13131a 100%);
+  padding-bottom:120px; /* espaço para o player */
 }
 .bottom{
   grid-area:bottom;
   border-top:1px solid #1f1f27;
   background:#0e0e14;
-  /* fixa no rodapé em mobile com safe-area */
-  position:sticky;
-  bottom:0;
-  z-index:50;
+  position:sticky; bottom:0; z-index:50;
 }
 
 /* ===== Sidebar ===== */
 .sb{padding:18px 14px 120px}
-.sb__brand{
-  display:flex; align-items:center; gap:10px;
-  padding:8px 10px; margin-bottom:12px;
-}
-.sb__logo{
-  width:32px;height:32px;border-radius:8px;
-  background:#ffffff; display:flex; align-items:center; justify-content:center;
-  color:#111; font-weight:800; font-size:14px;
-}
-.sb__name{font-weight:700; letter-spacing:.2px}
-
-.sb__section{margin-top:14px}
-.sb__sectionTitle{
-  color:#9aa; font-size:12px; text-transform:uppercase;
-  letter-spacing:.12em; padding:10px 10px 6px;
-}
-.sb__list{display:flex; flex-direction:column; gap:4px}
-.sb__item{
-  display:flex; align-items:center; gap:10px;
-  padding:12px 12px; border-radius:10px; color:#cfd0d7;
-  min-height:40px;
-}
-.sb__item:hover{background:#1a1a22; color:#fff}
-.sb__item.is-active{background:#2a2a36; color:#fff}
-.sb__icon{width:18px; text-align:center; opacity:.9; flex:0 0 18px}
-.sb__text{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.sb__brand{ display:flex; align-items:center; gap:10px; padding:8px 10px; margin-bottom:12px; }
+.sb__logo{ width:32px;height:32px;border-radius:8px; background:#fff; display:flex; align-items:center; justify-content:center; color:#111; font-weight:800; font-size:14px; }
+.sb__name{ font-weight:700; letter-spacing:.2px }
+.sb__section{ margin-top:14px }
+.sb__sectionTitle{ color:#9aa; font-size:12px; text-transform:uppercase; letter-spacing:.12em; padding:10px 10px 6px; }
+.sb__list{ display:flex; flex-direction:column; gap:4px }
+.sb__item{ display:flex; align-items:center; gap:10px; padding:12px 12px; border-radius:10px; color:#cfd0d7; min-height:40px; }
+.sb__item:hover{ background:#1a1a22; color:#fff }
+.sb__item.is-active{ background:#2a2a36; color:#fff }
+.sb__icon{ width:18px; text-align:center; opacity:.9; flex:0 0 18px }
+.sb__text{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
 
 /* ===== Playlist / Header ===== */
 .pl{min-height:100%; padding-bottom:160px}
-.pl__header{
-  display:flex; gap:26px; padding:26px 26px 10px 26px;
-  align-items:flex-end;
-}
-.pl__coverWrap{
-  width:200px; height:200px; border-radius:12px; overflow:hidden;
-  box-shadow:0 12px 30px rgba(0,0,0,.35);
-}
-.pl__cover{width:100%; height:100%; object-fit:cover}
-.pl__meta{flex:1; min-width:0}
-.pl__label{font-size:12px; letter-spacing:.2em; opacity:.85; text-transform:uppercase}
-.pl__title{
-  font-size:64px; line-height:.95; margin:6px 0 10px; font-weight:800;
-}
-.pl__desc{max-width:560px; color:#d6d6de; line-height:1.5}
-.pl__stats{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; color:#b8b8c6; font-size:14px}
-.pl__stats .dot::after{
-  content:"•"; margin-left:12px; color:#6f6f7a;
-}
-.pl__actions{display:flex; align-items:center; gap:10px; margin-top:16px}
-.btn{
-  width:42px;height:42px;border-radius:999px;background:#20202a;
-  display:flex;align-items:center;justify-content:center; color:#fff;
-}
-.btn:hover{background:#2a2a36}
-.btn--play{background:#20d15a; color:#111; font-weight:700}
-.btn--play:hover{filter:brightness(0.95)}
+.pl__header{ display:flex; gap:26px; padding:26px 26px 10px 26px; align-items:flex-end; }
+.pl__coverWrap{ width:200px; height:200px; border-radius:12px; overflow:hidden; box-shadow:0 12px 30px rgba(0,0,0,.35); }
+.pl__cover{ width:100%; height:100%; object-fit:cover }
+.pl__meta{ flex:1; min-width:0 }
+.pl__label{ font-size:12px; letter-spacing:.2em; opacity:.85; text-transform:uppercase }
+.pl__title{ font-size:64px; line-height:.95; margin:6px 0 10px; font-weight:800; }
+.pl__desc{ max-width:560px; color:#d6d6de; line-height:1.5 }
+.pl__stats{ display:flex; gap:12px; flex-wrap:wrap; margin-top:10px; color:#b8b8c6; font-size:14px }
+.pl__stats .dot::after{ content:"•"; margin-left:12px; color:#6f6f7a; }
+.pl__actions{ display:flex; align-items:center; gap:10px; margin-top:16px }
+.btn{ width:42px;height:42px;border-radius:999px;background:#20202a; display:flex;align-items:center;justify-content:center; color:#fff; }
+.btn:hover{ background:#2a2a36 }
+.btn--play{ background:#20d15a; color:#111; font-weight:700 }
+.btn--play:hover{ filter:brightness(0.95) }
 
 /* ===== Tabela ===== */
-.pl__table{padding:14px 10px 30px 10px}
-.pl__thead{
-  display:grid; grid-template-columns: 40px 1fr 1fr 60px;
-  gap:10px; padding:8px 16px; color:#a7a7b2; font-size:12px; text-transform:uppercase; letter-spacing:.12em;
-}
-.pl__tbody{margin-top:6px}
+.pl__table{ padding:14px 10px 30px 10px }
+.pl__thead{ display:grid; grid-template-columns: 40px 1fr 1fr 60px; gap:10px; padding:8px 16px; color:#a7a7b2; font-size:12px; text-transform:uppercase; letter-spacing:.12em; }
+.pl__tbody{ margin-top:6px }
 .pl__row{
   display:grid; grid-template-columns: 40px 1fr 1fr 60px;
   gap:10px; align-items:center; padding:12px 16px; border-radius:12px;
-  transition: background .18s ease;
+  transition: background .18s ease; cursor:pointer;
 }
-.pl__row:hover{background:rgba(255,255,255,.04)}
-.pl__titleCell{display:flex; flex-direction:column; gap:2px; min-width:0}
-.pl__song{font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.pl__artist{font-size:13px; color:#bfc0c9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.pl__album{white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.muted{color:#a9a9b4}
+.pl__row:hover{ background:rgba(255,255,255,.04) }
+.pl__row.row--active{ background:rgba(32, 209, 90, 0.12); }
+.pl__row.row--active:hover{ background:rgba(32, 209, 90, 0.18); }
+.pl__titleCell{ display:flex; flex-direction:column; gap:2px; min-width:0 }
+.pl__song{ font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+.pl__artist{ font-size:13px; color:#bfc0c9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+.pl__album{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+.muted{ color:#a9a9b4 }
 
-/* ===== Bottom Player ===== */
+/* ===== Player (rodapé) ===== */
 .player{
-  height:88px; display:grid; grid-template-columns: 1fr 1.2fr 1fr;
+  min-height:88px;
+  height:auto;
+  display:grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
   align-items:center; gap:10px; padding:0 14px;
   padding-bottom: calc(env(safe-area-inset-bottom, 0) + 0px);
 }
-.player__left{display:flex; align-items:center; gap:12px; min-width:0}
-.player__thumb{width:56px; height:56px; border-radius:8px; object-fit:cover; flex:0 0 auto}
-.player__meta{min-width:0}
-.player__title{font-weight:600; line-height:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-.player__artist{font-size:12px; color:#a7a7b2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-
-.player__center{display:flex; flex-direction:column; align-items:center; gap:6px; min-width:0}
-.player__controls{display:flex; gap:10px; align-items:center}
-.player__controls button{
-  width:36px;height:36px;border-radius:999px;background:#1a1a24;
-  display:flex;align-items:center;justify-content:center
-}
-.player__controls .play{width:44px;height:44px;background:#20d15a; color:#111; font-weight:700}
-
-.player__bar{display:flex; align-items:center; gap:10px; width:100%}
-.player__bar input[type="range"]{flex:1}
-.player__right{display:flex; align-items:center; gap:10px; justify-content:flex-end}
-.player__right input[type="range"]{width:140px}
-
-/* ===== Estilo básico dos ranges ===== */
-input[type="range"]{
-  -webkit-appearance:none; appearance:none; height:4px; background:#2b2b36; border-radius:999px;
-}
-input[type="range"]::-webkit-slider-thumb{
-  -webkit-appearance:none; appearance:none; width:12px; height:12px; border-radius:50%;
-  background:#fff; border:2px solid #0e0e14; margin-top:-4px;
-}
-input[type="range"]::-moz-range-thumb{
-  width:12px; height:12px; border-radius:50%; background:#fff; border:2px solid #0e0e14;
-}
-
-/* ===== Estados ===== */
-.pl__row{ cursor:pointer; }
-.pl__row.row--active{ background:rgba(32, 209, 90, 0.12); }
-.pl__row.row--active:hover{ background:rgba(32, 209, 90, 0.18); }
-
-.player .play{
-  background:#20d15a; color:#111; font-weight:700;
-}
+.player__left{ display:flex; align-items:center; gap:12px; min-width:0 }
+.player__thumb{ width:56px; height:56px; border-radius:8px; object-fit:cover; flex:0 0 auto }
+.player__meta{ min-width:0 }
+.player__title{ font-weight:600; line-height:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+.player__artist{ font-size:12px; color:#a7a7b2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+.player__center{ display:flex; flex-direction:column; align-items:center; gap:6px; min-width:0 }
+.player__controls{ display:flex; gap:10px; align-items:center }
+.player__controls button{ width:36px;height:36px;border-radius:999px;background:#1a1a24; display:flex;align-items:center;justify-content:center }
+.player__controls .play{ width:44px;height:44px;background:#20d15a; color:#111; font-weight:700 }
+.player__bar{ display:flex; align-items:center; gap:10px; width:100% }
+.player__bar input[type="range"]{ flex:1 }
+.player__right{ display:flex; align-items:center; gap:10px; justify-content:flex-end }
+.player__right input[type="range"]{ width:140px }
 .player .play:hover{ filter:brightness(0.95); }
 
 .lolo{ color: rgb(63, 63, 63); }
 
+/* ===== Ranges ===== */
+input[type="range"]{ -webkit-appearance:none; appearance:none; height:4px; background:#2b2b36; border-radius:999px; }
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none; appearance:none; width:12px; height:12px; border-radius:50%;
+  background:#fff; border:2px solid #0e0e14; margin-top:-4px;
+}
+input[type="range"]::-moz-range-thumb{ width:12px; height:12px; border-radius:50%; background:#fff; border:2px solid #0e0e14; }
+
 /* ===== Scrollbar (opcional) ===== */
-.left::-webkit-scrollbar,
-.center::-webkit-scrollbar { width:10px; height:10px; }
-.left::-webkit-scrollbar-thumb,
-.center::-webkit-scrollbar-thumb { background:#1f1f27; border-radius:999px; }
-.left::-webkit-scrollbar-track,
-.center::-webkit-scrollbar-track { background:transparent; }
+.left::-webkit-scrollbar, .center::-webkit-scrollbar { width:10px; height:10px; }
+.left::-webkit-scrollbar-thumb, .center::-webkit-scrollbar-thumb { background:#1f1f27; border-radius:999px; }
+.left::-webkit-scrollbar-track, .center::-webkit-scrollbar-track { background:transparent; }
 
-/* =========================
-   ======== Responsive ======
-   ========================= */
+/* ===== HAMBURGER / DRAWER ===== */
+/* Top bar só no mobile (escondida no desktop por padrão) */
+.sb__mobileBar{ display:none; }
+.sb__hamb{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:40px; height:40px; border-radius:10px; background:#1a1a24; color:#fff;
+}
+.sb__brand--compact{ gap:10px; }
 
-/* 1) >= 1024px (desktop “padrão”) — já coberto pelos estilos base */
+/* Sidebar desktop visível por padrão */
+.sb__desktop{ display:block; }
 
-/* 2) <= 1024px: reduz leve tipografia e espaçamentos */
+/* Drawer base (oculto por padrão) */
+.drawer{
+  position:fixed; inset:0; z-index:60;
+  display:none;            /* escondido por padrão */
+  pointer-events:none;
+}
+.drawer.is-open{ display:block; pointer-events:auto; }
+.drawer__backdrop{
+  position:absolute; inset:0; background:rgba(0,0,0,.5);
+  opacity:0; transition:opacity .18s ease;
+}
+.drawer.is-open .drawer__backdrop{ opacity:1; }
+.drawer__panel{
+  position:absolute; top:0; left:0;
+  width:min(82vw, 320px); height:100%;
+  background:#121218; border-right:1px solid #1e1e25;
+  transform:translateX(-100%); transition:transform .2s ease-out;
+  padding:14px 12px 100px; overflow:auto; -webkit-overflow-scrolling: touch;
+}
+.drawer.is-open .drawer__panel{ transform:none; }
+.sb__brand--drawer{ margin-bottom:8px; }
+
+/* ===== Responsive ===== */
 @media (max-width: 1024px){
   .pl__title{ font-size:52px; }
   .pl__coverWrap{ width:180px; height:180px; }
-  .pl__row { padding:10px 14px; }
+  .pl__row{ padding:10px 14px; }
 }
-
-/* 3) <= 900px: header empilha, tabela esconde álbum, já havia — mantém e ajusta */
 @media (max-width: 900px){
   .pl__title{font-size:40px}
   .pl__header{flex-direction:column; align-items:flex-start}
@@ -205,185 +182,95 @@ input[type="range"]::-moz-range-thumb{
   .pl__thead,.pl__row{grid-template-columns: 30px 1fr 100px 50px}
   .pl__album{display:none}
 }
-
-/* 4) <= 720px: colapsar layout para 1 coluna, sidebar vira “topo” rolável */
 @media (max-width: 720px){
   .shell{
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr 88px;
-    grid-template-areas:
-      "left"
-      "center"
-      "bottom";
+    grid-template-rows: auto 1fr minmax(88px, auto);
+    grid-template-areas: "left" "center" "bottom";
   }
 
+  /* A coluna .left vira topbar; menu completo só no drawer */
   .left{
-    position:sticky;
-    top:0;
-    z-index:40;
-    border-right:0;
-    border-bottom:1px solid #1e1e25;
-    /* barra compacta no topo */
-    padding:10px 8px 10px 8px;
+    position:sticky; top:0; z-index:40; border-right:0; border-bottom:1px solid #1e1e25;
+    padding:10px 12px; display:flex; align-items:center; justify-content:space-between;
   }
-  .sb{ padding:0; }
-  .sb__brand{ margin:0 4px 8px; padding:6px 6px; }
-  .sb__logo{ width:28px; height:28px; font-size:12px; }
-  .sb__name{ font-size:14px; }
-  .sb__sectionTitle{ display:none; }
-  .sb__list{ flex-direction:row; gap:6px; overflow:auto; padding:4px 6px 6px; }
-  .sb__item{ padding:10px 12px; border-radius:999px; white-space:nowrap; }
-  .sb__icon{ opacity:1; }
-  .sb__text{ max-width:140px; }
 
-  /* header da playlist mais compacto */
+  .sb__mobileBar{ display:flex; align-items:center; gap:10px; width:100%; }
+  .sb__desktop{ display:none; }   /* esconde sidebar desktop */
+  .drawer{ display:block; }       /* drawer passa a existir, mas só aparece com .is-open */
+
+  .sb__name{ font-size:16px; }
+  .sb__logo{ width:28px; height:28px; }
+
   .pl__header{ padding:16px 14px 8px; gap:14px; }
   .pl__coverWrap{ width:120px; height:120px; border-radius:10px; }
-  .pl__label{ font-size:11px; letter-spacing:.16em; }
   .pl__title{ font-size:30px; margin:4px 0 8px; }
   .pl__desc{ font-size:14px; max-width:100%; }
   .pl__stats{ font-size:12px; gap:10px; }
-  .pl__actions{ gap:8px; }
 
   .pl__table{ padding:8px 6px 20px; }
   .pl__thead{ padding:6px 10px; gap:8px; font-size:11px; }
-  .pl__row{
-    padding:10px 10px;
-    gap:8px;
-    grid-template-columns: 26px 1fr 80px 42px;
-    border-radius:10px;
-  }
-  .pl__song{ font-size:14px; }
-  .pl__artist{ font-size:12px; }
-  .muted{ font-size:12px; }
+  .pl__row{ padding:10px; gap:8px; grid-template-columns: 26px 1fr 80px 42px; border-radius:10px; }
 
   .player{
     grid-template-columns: 1fr;
-    height:auto;
-    padding:10px 12px calc(env(safe-area-inset-bottom, 0) + 10px);
+    padding:10px 12px calc(env(safe-area-inset-bottom, 0) + 12px);
     gap:10px;
   }
-  .player__left{
-    gap:10px;
-  }
-  .player__thumb{ width:52px; height:52px; }
-  .player__title{ font-size:14px; }
-  .player__artist{ font-size:12px; }
   .player__center{ order:3; }
-  .player__controls button{ width:40px; height:40px; }
-  .player__controls .play{ width:48px; height:48px; }
-  .player__right{
-    order:2; justify-content:space-between; gap:12px;
-  }
+  .player__right{ order:2; justify-content:space-between; gap:12px; }
   .player__right input[type="range"]{ width:100%; max-width:none; }
 }
-
-/* 5) <= 540px: tipografia/tap targets ainda maiores e linhas mais altas */
 @media (max-width: 540px){
-  .sb__item{ padding:10px 14px; }
   .pl__title{ font-size:26px; }
-  .pl__desc{ font-size:13.5px; }
-  .btn{ width:44px; height:44px; }
   .pl__row{ grid-template-columns: 24px 1fr 76px 40px; }
   .player__controls button{ width:44px; height:44px; }
   .player__controls .play{ width:52px; height:52px; }
 }
-
-/* 6) <= 400px: ultra compacto */
 @media (max-width: 400px){
   .pl__header{ padding:14px 12px 6px; }
   .pl__coverWrap{ width:100px; height:100px; }
   .pl__title{ font-size:22px; }
   .pl__table{ padding:8px 6px 16px; }
-  .pl__thead{ display:none; } /* cabeçalho some, linhas viram cartões */
-  .pl__row{
-    grid-template-columns: 24px 1fr auto;
-    grid-auto-rows: auto;
-    gap:8px;
-  }
+  .pl__thead{ display:none; }
+  .pl__row{ grid-template-columns: 24px 1fr auto; grid-auto-rows:auto; gap:8px; }
   .pl__album{ display:none !important; }
   .player__thumb{ width:48px; height:48px; }
 }
 
-/* ===== Acessibilidade e performance ===== */
+/* Acessibilidade: reduzir movimento */
 @media (prefers-reduced-motion: reduce){
-  * { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+  * { animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important; }
 }
-/* ====== HAMBURGER / DRAWER ====== */
-
-/* Top bar que aparece só no mobile */
-.sb__mobileBar{
-  display:none;
-}
-
-.sb__hamb{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:40px; height:40px;
-  border-radius:10px;
-  background:#1a1a24;
-  color:#fff;
-}
-
-.sb__brand--compact{ gap:10px; }
-
-/* Container da versão desktop da sidebar (visível no desktop) */
-.sb__desktop{ display:block; }
-
-/* Drawer base (oculto por padrão) */
-.drawer{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:60;
-}
-.drawer.is-open{
-  pointer-events:auto;
-}
-.drawer__backdrop{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.5);
-  opacity:0;
-  transition:opacity .18s ease;
-}
-.drawer.is-open .drawer__backdrop{
-  opacity:1;
-}
-.drawer__panel{
-  position:absolute;
-  top:0; left:0;
-  width:min(82vw, 320px);
-  height:100%;
-  background:#121218;
-  border-right:1px solid #1e1e25;
-  transform:translateX(-100%);
-  transition:transform .2s ease-out;
-  padding:14px 12px 100px;
-  overflow:auto;
-  -webkit-overflow-scrolling: touch;
-}
-.drawer.is-open .drawer__panel{
-  transform:none;
-}
-.sb__brand--drawer{ margin-bottom:8px; }
-
-/* ====== Breakpoint mobile ====== */
 @media (max-width: 720px){
-  /* A coluna .left vira apenas a topbar; o conteúdo do menu vem do drawer */
+  /* A coluna vira topbar bem compacta */
   .left{
-    padding:10px 12px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+    position:sticky; top:0; z-index:40;
+    border-right:0; border-bottom:1px solid #1e1e25;
+    padding:0;              /* <<< tira padding da coluna */
+    display:block;          /* deixa a topbar controlar o espaçamento */
   }
 
-  /* Mostrar topbar do mobile e esconder a sidebar completa */
-  .sb__mobileBar{ display:flex; align-items:center; gap:10px; width:100%; }
-  .sb__desktop{ display:none; }
+  /* zera o padding gigante do wrapper no mobile */
+  .sb{ padding:0; }         /* <<< evita barra “alta” */
 
-  /* Ajustes visuais menores */
-  .sb__name{ font-size:16px; }
+  /* topbar enxuta */
+  .sb__mobileBar{
+    display:flex; align-items:center; gap:10px; width:100%;
+    padding:6px 10px;       /* <<< controla o respiro */
+    min-height:56px;        /* <<< altura confortável (48–56) */
+  }
+
+  /* o compacto herdava margin-bottom da versão desktop – zera aqui */
+  .sb__brand--compact{
+    margin:0 !important;    /* <<< remove margin-bottom da brand */
+    gap:10px;
+  }
+
+  /* logo um pouco menor no mobile */
   .sb__logo{ width:28px; height:28px; }
+
+  /* só para garantir: sidebar desktop some; drawer aparece somente quando .is-open */
+  .sb__desktop{ display:none; }
+  .drawer{ display:block; } /* fica disponível, mas invisível sem .is-open */
 }

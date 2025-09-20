@@ -10,20 +10,16 @@ export default function Sidebar(){
 
   // Fechar com ESC
   useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === 'Escape') setOpen(false)
-    }
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false) }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
-  // Fechar clicando fora
+  // Fechar clicando fora do painel
   useEffect(() => {
     if (!open) return
     const onClick = (e) => {
-      if (drawerRef.current && !drawerRef.current.contains(e.target)) {
-        setOpen(false)
-      }
+      if (drawerRef.current && !drawerRef.current.contains(e.target)) setOpen(false)
     }
     document.addEventListener('mousedown', onClick)
     return () => document.removeEventListener('mousedown', onClick)
@@ -33,7 +29,7 @@ export default function Sidebar(){
 
   return (
     <div className="sb">
-      {/* Top bar (mostra no mobile) */}
+      {/* Top bar (só mobile) */}
       <div className="sb__mobileBar">
         <button
           className="sb__hamb"
@@ -46,15 +42,15 @@ export default function Sidebar(){
         </button>
 
         <div className="sb__brand sb__brand--compact">
-          <div className="sb__logo"><Music className='lolo'/></div>
+          <div className="sb__logo"><Music className="lolo" /></div>
           <div className="sb__name">NeuraMusic</div>
         </div>
       </div>
 
-      {/* Sidebar estática (desktop) */}
+      {/* Sidebar fixa (só desktop) */}
       <div className="sb__desktop">
         <div className="sb__brand">
-          <div className="sb__logo"><Music className='lolo'/></div>
+          <div className="sb__logo"><Music className="lolo" /></div>
           <div className="sb__name">NeuraMusic</div>
         </div>
 
@@ -81,11 +77,17 @@ export default function Sidebar(){
         </nav>
       </div>
 
-      {/* Drawer (mobile) */}
+      {/* Drawer (só mobile; controlado por .drawer/.is-open no CSS) */}
       <div className={`drawer ${open ? 'is-open' : ''}`} aria-hidden={!open}>
-        <div className="drawer__panel" ref={drawerRef} role="dialog" aria-modal="true" id="drawer-nav">
+        <div
+          className="drawer__panel"
+          ref={drawerRef}
+          role="dialog"
+          aria-modal="true"
+          id="drawer-nav"
+        >
           <div className="sb__brand sb__brand--drawer">
-            <div className="sb__logo"><Music className='lolo'/></div>
+            <div className="sb__logo"><Music className="lolo" /></div>
             <div className="sb__name">NeuraMusic</div>
           </div>
 
@@ -112,8 +114,12 @@ export default function Sidebar(){
           </nav>
         </div>
 
-        {/* backdrop */}
-        <button className="drawer__backdrop" onClick={() => setOpen(false)} aria-label="Fechar menu" />
+        {/* backdrop clicável */}
+        <button
+          className="drawer__backdrop"
+          onClick={() => setOpen(false)}
+          aria-label="Fechar menu"
+        />
       </div>
     </div>
   )
